@@ -166,3 +166,46 @@ for(i in 1:length(folder_list)) {
 head(final_data)
 tail(final_data)
 dim(final_data)
+
+# 컬럼수가 다를때 같은 종류끼리 data를 합칠때 
+setwd('/Users/paulhwang/dev/2_r')
+data<-read.csv('m3.csv')
+data
+data$v7<-1:nrow(data)
+data
+write.csv(data, 'data.csv', row.names = F)
+list.files()
+
+getwd()
+file_list<-list.files()
+file_list[-c(2,5, 6,7)]
+library(stringr)
+str_detect(file_list, 'R')
+str_detect(file_list, 'csv')
+file_list
+
+folder_index<-str_detect(file_list, 'R') | str_detect(file_list, 'csv')
+folder_list<-file_list[!folder_index]
+
+final_data<-NULL
+final_data2<-NULL
+i<-2
+for(i in 1:length(folder_list)) {
+  setwd(paste0('/Users/paulhwang/dev/2_r/',folder_list[i]))
+  getwd()
+  file_list<-list.files()
+  # j<-4
+  for(j in 1:length(file_list)) {
+    data<-read.csv(file_list[j])
+    if(ncol(data)==6) {
+      final_data<-rbind(final_data, data)
+    } else {
+      final_data2<-rbind(final_data2, data)
+    }
+    
+    cat('\n', i, '-', j)
+  } # inner for 
+} # outter for
+
+dim(final_data)
+dim(final_data2)
