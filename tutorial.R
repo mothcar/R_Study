@@ -1,3 +1,7 @@
+# 1. vertor
+# 2. dataframe 
+# 3. list 
+
 # Start 
 a<-1
 a
