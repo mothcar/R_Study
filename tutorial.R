@@ -86,3 +86,52 @@ m3$v4<-1:8
 m3
 nrow(m3) # number of row ## like length  8
 length(m3) # [1] 4 
+
+# datafram3 13min   
+nrow(m3)
+m3$v5<-2:(nrow(m3)+1)  # (계산식)
+ncol(m3)
+m3$v6<-ifelse(m3$v1 %% 2 == 0, '짝수', '홀수')
+m3
+str(m3)
+head(m3)
+tail(m3, 7)
+
+# dataframe 저장하고 불러오기 
+# 1번째부터 10번째까지 수집하기 
+m4<- NULL
+for(i in 1:10) {
+ m4<-rbind(m4, m2) 
+ cat('\n', i)
+
+}
+m4
+dim(m4)
+
+# String package 
+install.packages("stringr")
+library(stringr)
+fruit <- c("apple", "banana", "pear", "pineapple")
+str_count(fruit, "a")
+str_count(fruit, "p")
+str_count(fruit, "e")
+str_count(fruit, c("a", "b", "p", "p"))
+
+m3
+str_detect(m3$v6, '홀') # [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
+m3[str_detect(m3$v6, '홀'), ]
+m3[1,6]<-'홀123'
+m3
+m3[m3$v6 %in% '홀수', ]
+
+# /Users/paulhwang/dev/2_r
+setwd('/Users/paulhwang/dev/2_r')
+getwd()
+
+# 저장 
+write.csv(m3, 'm3.csv', row.names = F)
+m4<-read.csv('m3.csv')
+m4<-read.csv('m3.csv')[-1, ] # row.names가 추가 되었을때 빼고 보고 싶을때
+m4
+
+# R기초 반복문활용
