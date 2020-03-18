@@ -135,3 +135,34 @@ m4<-read.csv('m3.csv')[-1, ] # row.names가 추가 되었을때 빼고 보고 �
 m4
 
 # R기초 반복문활용
+# 3개의 폴더의 파일들을 하나의 파일로 만들기 
+setwd('/Users/paulhwang/dev/2_r')
+# 현재 디렉토리내의 파일 가져오기 
+list.files()
+file_list<-list.files()
+file_list[-c(2,5, 6,7)]
+library(stringr)
+str_detect(file_list, 'R')
+str_detect(file_list, 'csv')
+file_list
+
+folder_index<-str_detect(file_list, 'R') | str_detect(file_list, 'csv')
+folder_list<-file_list[!folder_index]
+
+final_data<-NULL
+#i<-2
+for(i in 1:length(folder_list)) {
+  setwd(paste0('/Users/paulhwang/dev/2_r/',folder_list[i]))
+  getwd()
+  file_list<-list.files()
+  # j<-4
+  for(j in 1:length(file_list)) {
+    data<-read.csv(file_list[j])
+    final_data<-rbind(final_data, data)
+    cat('\n', i, '-', j)
+  } # inner for 
+} # outter for 
+
+head(final_data)
+tail(final_data)
+dim(final_data)
