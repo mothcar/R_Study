@@ -213,3 +213,59 @@ for(i in 1:length(folder_list)) {
 
 dim(final_data)
 dim(final_data2)
+
+# List ## 모든 data type을 넣을 수 있다.  dataframe도 넣을수 있다. 
+# 각 주소에서 depth1 만 뽑고 싶다. 
+juso<-c('서울시 동작구 신대방동', '전라남도 해남군 해리 ', '경기도 안산시 상록구')
+juso
+aa<-str_split(juso, ' ')
+seoul<-aa[[1]]
+length(seoul)
+seoul[1]
+aa[[1]][1]
+names(aa)<-c('seoul', 'junnam', 'gung')
+aa[seoul]   # Error
+aa[[seoul]] # Error
+aa$seoul    # [1] "서울시"   "동작구"   "신대방동"
+
+# list --> vector 
+aa2<-unlist(aa)
+aa
+aa2
+length(aa2)
+length(aa)
+
+# apply / sapply / lapply / tapply  반복적인 것을 한꺼번에 하는 함수 
+data
+apply(data[,-c(3:6)], 1, sum)  # 1은 행을 의미함
+apply(data[,-6], 1, mean)  # 평균
+apply(data[,-c(3:6)], 2, sum)  # 2는 열을 의미함
+apply(data[,-6], 2, mean)  # 평균
+
+tapply(data$v3, data$v6, sum) # 조건별로 적용 / 타겟 컬럼 , 조건 컬럼, 명령 
+
+sapply(aa, length) # list 에 대한 처리 
+
+first<-function(x) {
+  x[1]
+}
+first(aa[[1]])
+
+sapply(aa, first) # [1] "서울시"   "전라남도" "경기도" 
+lapply(aa, first) # 리스트 형태 유지 
+
+index<-function(x, i) {
+  x[i]
+}
+
+index(aa[[1]], 2)
+sapply(aa, index, 2) # 1] "동작구" "해남군" "안산시"
+# same result by for loop 
+dd<-c()
+i<-1
+for(i in 1:length(aa)) {
+  dd<-c(dd, aa[[i]][1])
+  cat('\n', i)
+}
+dd
+length(dd)
